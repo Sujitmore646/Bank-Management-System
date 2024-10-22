@@ -1,0 +1,114 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+class Account {
+public:
+    string accountHolder;
+    string accountNumber;
+    double balance;
+    Account(string holder, string number) : accountHolder(holder), accountNumber(number), balance(0.0) {}
+};
+class BankManagementSystem {
+private:
+    vector<Account> accounts;
+public:
+    void createAccount(const string& holder, const string& number) {
+        accounts.push_back(Account(holder, number));
+    cout << "Account created for: " << holder << " with account number: " << number << endl;
+    }
+    void deposit(const string& number, double amount) {
+        for (auto& account : accounts) {
+            if (account.accountNumber == number) {
+                account.balance += amount;
+        cout << "Deposited " << amount << " to account " << number << endl;
+                return;
+            }
+        }
+        cout << "Account not found."<<endl;
+    }
+    void withdraw(const string& number, double amount) {
+        for (auto& account : accounts) {
+            if (account.accountNumber == number) {
+                if (amount > account.balance) {
+                    cout << "Insufficient balance.<<endl";
+                } else {
+                    account.balance -= amount;
+                    cout << "Withdrew " << amount << " from account " << number << endl;
+                }
+                return;
+            }
+        }
+        cout << "Account not found."<<endl;
+    }
+    void viewAccount(const string& number) {
+        for (const auto& account : accounts) {
+            if (account.accountNumber == number) {
+                cout << "Account Holder: " << account.accountHolder 
+                     << ", Account Number: " << account.accountNumber 
+                     << ", Balance: " << account.balance << endl;
+                return;
+            }
+        }
+        cout << "Account not found."<<endl;
+    }
+};
+int main() {
+    BankManagementSystem bms;
+    int choice;
+
+    do {
+        cout << "Bank Management System"<<endl;
+        cout << "1. Create Account"<<endl;
+        cout << "2. Deposit"<<endl;
+        cout << "3. Withdraw"<<endl;
+        cout << "4. View Account"<<endl;
+        cout << "5. Exit"<<endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        switch (choice) {
+            case 1: {
+                string holder, number;
+                cout << "Enter account holder name: ";
+                cin >> holder;
+                cout << "Enter account number: ";
+                cin >> number;
+                bms.createAccount(holder, number);
+                break;
+            }
+            case 2: {
+                string number;
+                double amount;
+                cout << "Enter account number to deposit to: ";
+                cin >> number;
+                cout << "Enter amount to deposit: ";
+                cin >> amount;
+                bms.deposit(number, amount);
+                break;
+ }
+            case 3: {
+                string number;
+                double amount;
+                cout << "Enter account number to withdraw from: ";
+                cin >> number;
+                cout << "Enter amount to withdraw: ";
+                cin >> amount;
+                bms.withdraw(number, amount);
+                break;
+            }
+            case 4: {
+                string number;
+                cout << "Enter account number to view: ";
+                cin >> number;
+                bms.viewAccount(number);
+                break;
+            }
+            case 5:
+                cout << "Exiting..."<<endl;
+                break;
+            default:
+                cout << "Invalid choice, please try again."<<endl;
+        }
+    } while (choice != 5);
+    return 0;
+}
