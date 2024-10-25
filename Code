@@ -1,37 +1,38 @@
 #include <iostream>
-#include <vector>
-#include <string>
 using namespace std;
 class Account {
 public:
     string accountHolder;
     string accountNumber;
-    double balance;
-    Account(string holder, string number) : accountHolder(holder), accountNumber(number), balance(0.0) {}
-};
+    double balance;};
+
 class BankManagementSystem {
-private:
-    vector<Account> accounts;
 public:
-    void createAccount(const string& holder, const string& number) {
+    void createAccount(const string& holder, const string& number)
+    {
         accounts.push_back(Account(holder, number));
-    cout << "Account created for: " << holder << " with account number: " << number << endl;
+        cout << "Account created for: " << holder;
+        cout<< " with account number: " << number << endl;
     }
+
     void deposit(const string& number, double amount) {
         for (auto& account : accounts) {
             if (account.accountNumber == number) {
                 account.balance += amount;
-        cout << "Deposited " << amount << " to account " << number << endl;
+                cout << "Deposited " << amount;
+                cout<< " Account Number:" << number << endl;
                 return;
             }
         }
         cout << "Account not found."<<endl;
     }
+
     void withdraw(const string& number, double amount) {
-        for (auto& account : accounts) {
+        for (auto& account : accounts)
+        {
             if (account.accountNumber == number) {
                 if (amount > account.balance) {
-                    cout << "Insufficient balance.<<endl";
+                    cout << "Insufficient balance.\n";
                 } else {
                     account.balance -= amount;
                     cout << "Withdrew " << amount << " from account " << number << endl;
@@ -41,18 +42,20 @@ public:
         }
         cout << "Account not found."<<endl;
     }
+
     void viewAccount(const string& number) {
         for (const auto& account : accounts) {
             if (account.accountNumber == number) {
-                cout << "Account Holder: " << account.accountHolder 
-                     << ", Account Number: " << account.accountNumber 
-                     << ", Balance: " << account.balance << endl;
+                cout << "Account Holder: " << account.accountHolder<<endl;
+                cout<< " Account Number: " << account.accountNumber<<endl; 
+                cout<< "Balance: " << account.balance << endl;
                 return;
             }
         }
         cout << "Account not found."<<endl;
     }
 };
+
 int main() {
     BankManagementSystem bms;
     int choice;
@@ -66,6 +69,7 @@ int main() {
         cout << "5. Exit"<<endl;
         cout << "Enter your choice: ";
         cin >> choice;
+
         switch (choice) {
             case 1: {
                 string holder, number;
@@ -85,7 +89,7 @@ int main() {
                 cin >> amount;
                 bms.deposit(number, amount);
                 break;
- }
+            }
             case 3: {
                 string number;
                 double amount;
@@ -110,5 +114,6 @@ int main() {
                 cout << "Invalid choice, please try again."<<endl;
         }
     } while (choice != 5);
+
     return 0;
 }
